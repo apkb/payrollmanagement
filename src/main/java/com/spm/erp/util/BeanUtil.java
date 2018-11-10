@@ -7,6 +7,7 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
 public class BeanUtil {
+	
 	public static <T> T copyNonNullProperties(T target, T in) {
 		if (in == null || target == null || target.getClass() != in.getClass())
 			return null;

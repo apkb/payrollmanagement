@@ -53,7 +53,7 @@ public class PayrollServiceImpl implements PayrollService {
 			payrollRepo.save(payrollOriginal);
 			return true;
 		} catch (Exception ex) {
-			throw new AppException("Something went wrong. Payroll not updated.");
+			throw new AppException("Something went wrong.Payroll not updated.");
 		}
 	}
 

@@ -57,7 +57,7 @@ public class PayrollController {
 		boolean isUpdated = payrollService.updatePayroll(payroll,id);
 		CustomResponse response;
 		if(isUpdated) {
-			response = new CustomResponse(Boolean.TRUE, "Payroll updated successfully.");
+			response = new CustomResponse(Boolean.TRUE, "Payroll updated successfully!");
 		} 
 		else {
 			response = new CustomResponse(Boolean.FALSE, "No Payroll found with id:"+id);
