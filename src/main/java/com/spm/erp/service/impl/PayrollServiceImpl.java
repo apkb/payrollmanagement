@@ -10,6 +10,7 @@ import com.spm.erp.exception.AppException;
 import com.spm.erp.model.Payroll;
 import com.spm.erp.repository.PayrollRepository;
 import com.spm.erp.service.PayrollService;
+import com.spm.erp.util.BeanUtil;
 
 @Service
 public class PayrollServiceImpl implements PayrollService {
@@ -41,8 +42,19 @@ public class PayrollServiceImpl implements PayrollService {
 
 	@Override
 	public boolean updatePayroll(Payroll payroll, Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		Optional<Payroll> payrollOptional = payrollRepo.findById(id);
+		if(!payrollOptional.isPresent())
+		   return false;
+		Payroll payrollOriginal = payrollOptional.get();
+		payrollOriginal = BeanUtil.<Payroll>copyNonNullProperties(payrollOriginal, payroll);
+		payrollOriginal.setGrossPay(computeGrossPay(payrollOriginal));
+		payrollOriginal.setNetPay(computeNetPay(payrollOriginal));
+		try {
+			payrollRepo.save(payrollOriginal);
+			return true;
+		} catch (Exception ex) {
+			throw new AppException("Something went wrong. Payroll not updated.");
+		}
 	}
 
 	@Override
