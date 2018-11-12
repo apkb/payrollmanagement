@@ -19,7 +19,7 @@ Payroll microservice implementation using Spring boot project + JPA to perform o
 3. GET - get payroll by ID,
    URL : http://localhost:8082/payrolls/payroll/1
    
-4. PUT - update an existing payroll. Any field can be updated except netPay, and grossPay. Validation yet to be done for this,
+4. PUT - update an existing payroll.
      Long employeeId;
      Double hoursWorked;
      Double ratePerHour;
