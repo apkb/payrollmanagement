@@ -1,6 +1,6 @@
 # payrollmanagement
 Payroll microservice implementation using Spring boot project + JPA to perform operations on Payroll table
-1. POST - to insert new payroll
+1. POST - to insert new payroll,
    URL : http://localhost:8082/payrolls/payroll/
    Request Body :  {
  		"hoursWorked":10,
@@ -13,13 +13,13 @@ Payroll microservice implementation using Spring boot project + JPA to perform o
         "endDate": "2019-01-01"
     }
 
-2. GET - get all payrolls
+2. GET - get all payrolls,
    URL : http://localhost:8082/payrolls/payroll
    
-3. GET - get payroll by ID
+3. GET - get payroll by ID,
    URL : http://localhost:8082/payrolls/payroll/1
    
-4. PUT - update an existing payroll. Any field can be updated except netPay, and grossPay. Validation yet to be done for this
+4. PUT - update an existing payroll. Any field can be updated except netPay, and grossPay. Validation yet to be done for this,
      Long employeeId;
      Double hoursWorked;
      Double ratePerHour;
