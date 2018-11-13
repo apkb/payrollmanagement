@@ -1,0 +1,132 @@
+JasperController
+
+    @GetMapping("payslip")
+    private @ResponseBody
+    void getPaySlip(HttpServletResponse response) {
+        try {
+            final OutputStream outputStream = response.getOutputStream();
+            JasperPrint jasperPrint = service.generatePaySlip();
+
+            response.setHeader("Content-Disposition", "inline; " + "paySlip");
+
+            JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+ 
+JasperService Impl
+
+ @Override
+    public JasperPrint generatePaySlip() {
+        JasperPrint jasperPrint = null;
+        Map<String, Object> param = new HashMap<>();
+        List<PaySlip> tableData = new ArrayList<>();
+        try {
+
+            InputStream jasperStream = getClass().getClassLoader().getResourceAsStream("report/PaySlip.jrxml");
+            JasperDesign design = JRXmlLoader.load(jasperStream);
+            PaySlip p = new PaySlip();
+            p.setEmployeeName("Rahul");
+            p.setPaySlip("2017-08-09");
+            tableData.add(p);
+
+            JRDataSource jrDataSource = new JRBeanCollectionDataSource(tableData);
+
+            param.put("datasource", jrDataSource);
+
+            JasperReport report = JasperCompileManager.compileReport(design);
+            jasperPrint = JasperFillManager.fillReport(report, param, jrDataSource);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jasperPrint;
+    }
+    
+    
+ PaySlip Class
+ 
+ public class PaySlip {
+
+    private String paySlip;
+    private String employeeName;
+
+    public String getPaySlip() {
+        return paySlip;
+    }
+
+    public void setPaySlip(String paySlip) {
+        this.paySlip = paySlip;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+}
+
+
+File Name = > PaySlip.jrxml
+==============================================PaySLip Jasper report XML========================================
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaySlip" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="84383ecd-132f-4009-be09-3905b88cc01b">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="paySlip" class="java.lang.String">
+		<fieldDescription><![CDATA[paySlip]]></fieldDescription>
+	</field>
+	<field name="employeeName" class="java.lang.String">
+		<fieldDescription><![CDATA[employeeName]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement x="43" y="22" width="187" height="30" uuid="bd353e74-7acc-4b6e-b374-0c531f628910"/>
+				<textElement>
+					<font size="22" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[PaySlip]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="24" width="100" height="16" uuid="97b7799d-840b-4f03-8fa3-bc15f46ab628"/>
+				<text><![CDATA[PaySlip for Period]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="640" y="24" width="100" height="30" uuid="005ab808-cb75-4849-b479-4aa4783f1804"/>
+				<textFieldExpression><![CDATA[$F{paySlip}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="40" y="10" width="100" height="20" uuid="40d8cf60-680d-49aa-952a-fe939ca81b9d"/>
+				<text><![CDATA[Employee Name:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="10" width="100" height="30" uuid="80538613-9a6c-428f-a526-051dfe9c1ab7"/>
+				<textFieldExpression><![CDATA[$F{employeeName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
