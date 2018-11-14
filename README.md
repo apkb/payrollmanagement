@@ -36,3 +36,6 @@ Payroll microservice implementation using Spring boot project + JPA to perform o
  		"hoursWorked":20,
         "tax":30
     }
+
+5. DELETE - delete payroll by id
+   URL- http://localhost:8082/payrolls/payroll/1
