@@ -39,3 +39,6 @@ Payroll microservice implementation using Spring boot project + JPA to perform o
 
 5. DELETE - delete payroll by id
    URL- http://localhost:8082/payrolls/payroll/1
+   
+6. GET - get downloadable report for Payroll by ID 
+   URL - http://localhost:8082/payrolls/payroll/1/report
