@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaySlip" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="84383ecd-132f-4009-be09-3905b88cc01b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="employeeId" class="java.lang.Integer">
+		<fieldDescription><![CDATA[employeeId]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<staticText>
+				<reportElement x="43" y="22" width="187" height="30" uuid="bd353e74-7acc-4b6e-b374-0c531f628910"/>
+				<textElement>
+					<font size="22" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[PaySlip]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="530" y="24" width="100" height="16" uuid="97b7799d-840b-4f03-8fa3-bc15f46ab628"/>
+				<text><![CDATA[PaySlip for Period]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="640" y="24" width="100" height="30" uuid="005ab808-cb75-4849-b479-4aa4783f1804"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="40" y="10" width="100" height="20" uuid="40d8cf60-680d-49aa-952a-fe939ca81b9d"/>
+				<text><![CDATA[Employee Name:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="10" width="100" height="30" uuid="80538613-9a6c-428f-a526-051dfe9c1ab7"/>
+				<textFieldExpression><![CDATA[$F{employeeId}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,7 +1,9 @@
 package com.spm.erp.controller;
 
+import java.io.OutputStream;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ import com.spm.erp.model.Payroll;
 import com.spm.erp.security.JwtAuthenticationResponse;
 import com.spm.erp.service.PayrollService;
 
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperPrint;
+
 @RestController
 @RequestMapping("/payrolls")
 public class PayrollController {
@@ -34,7 +39,7 @@ public class PayrollController {
 	}
 	
 	@GetMapping("/payroll/{payroll_id}")
-	public ResponseEntity<?> getPayrollById(@PathVariable("payroll_id") Long id) {
+	public ResponseEntity<?> getPayrollById(@PathVariable("payroll_id") Integer id) {
 		Optional<Payroll> payroll = payrollService.fetchPayrollById(id);
 		return ResponseEntity.ok(payroll.isPresent()? payroll.get() : new CustomResponse(Boolean.FALSE,"No Payroll found with id:"+id));
 	}
@@ -53,7 +58,7 @@ public class PayrollController {
 	}
 	
 	@PutMapping("/payroll/{payroll_id}")
-	public ResponseEntity<?> updatePayroll(@PathVariable("payroll_id") Long id,@RequestBody Payroll payroll) {
+	public ResponseEntity<?> updatePayroll(@PathVariable("payroll_id") Integer id,@RequestBody Payroll payroll) {
 		boolean isUpdated = payrollService.updatePayroll(payroll,id);
 		CustomResponse response;
 		if(isUpdated) {
@@ -66,7 +71,7 @@ public class PayrollController {
 	}
 
 	@DeleteMapping("/payroll/{payroll_id}")
-	public ResponseEntity<?> deletePayroll(@PathVariable("payroll_id") Long id) {
+	public ResponseEntity<?> deletePayroll(@PathVariable("payroll_id") Integer id) {
 		Optional<Payroll> payroll = payrollService.fetchPayrollById(id);
 		if(!payroll.isPresent()) {
 			return ResponseEntity.ok(new CustomResponse(Boolean.FALSE,"No Payroll found with id:"+id));
@@ -74,4 +79,20 @@ public class PayrollController {
 		payrollService.deletePayroll(id);
 		return ResponseEntity.ok(new CustomResponse(Boolean.TRUE,"Payroll deleted successfully."));
 	}
+	
+    @GetMapping("/payroll/{payroll_id}/report")
+    public ResponseEntity<?> getPaySlip(@PathVariable("payroll_id") Integer id) {
+    	Optional<Payroll> payroll = payrollService.fetchPayrollById(id);
+		if(!payroll.isPresent()) {
+			return ResponseEntity.ok(new CustomResponse(Boolean.FALSE,"No Payroll found with id:"+id));
+		}
+            byte[] bytes = payrollService.generatePayrollReport(payroll.get());
+
+            return ResponseEntity
+            	      .ok()
+            	      .header("Content-Type", "application/pdf; charset=UTF-8")
+            	      .header("Content-Disposition", "inline; filename=\"Payroll_" + payroll.get().getId() + ".pdf\"")
+            	      .body(bytes);
+        
+    }
 }

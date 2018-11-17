@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.spm.erp.model.Payroll;
 
 @Repository
-public interface PayrollRepository extends JpaRepository<Payroll, Long> {
+public interface PayrollRepository extends JpaRepository<Payroll, Integer> {
 
 }

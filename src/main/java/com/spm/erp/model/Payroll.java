@@ -26,10 +26,10 @@ public class Payroll {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
 	@NotNull
-    private Long employeeId;
+    private Integer employeeId;
 	
     @NotNull
     private Double hoursWorked;
@@ -58,7 +58,7 @@ public class Payroll {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-	public Payroll(@NotNull Long employeeId, @NotNull Double hoursWorked, @NotNull Double ratePerHour,
+	public Payroll(@NotNull Integer employeeId, @NotNull Double hoursWorked, @NotNull Double ratePerHour,
 			@NotNull Double deductions, @NotNull Double allowances, @NotNull Double netPay, @NotNull Double grossPay,
 			@NotNull Double tax, @NotNull Date startDate, @NotNull Date endDate) {
 		this.employeeId = employeeId;
